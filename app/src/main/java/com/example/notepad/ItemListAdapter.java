@@ -16,11 +16,11 @@ import model.Task;
 
 public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemListHolder> {
     private Context context;
-    private ArrayList<Task> tasks;
+    private ArrayList<Task> task;
 
-    public ItemListAdapter(Context context,ArrayList<Task> tasks){
+    public ItemListAdapter(Context context, ArrayList<Task> task){
         this.context = context;
-        this.tasks = tasks;
+        this.task = task;
     }
 
     @NonNull
@@ -32,9 +32,9 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemLi
 
     @Override
     public void onBindViewHolder(@NonNull ItemListHolder holder, int position) {
-        Task current = tasks.get(position);
+        Task current = task.get(position);
         holder.mTvTitle.setText(current.taskTitle);
-//        holder.mTvItems.setText(current.taskItems);
+        holder.mTvItems.setText((CharSequence) current.taskItems);
     }
 
     @Override

@@ -28,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
     private int itemId = 0;
     private int taskid = 0;
 
+    public static String keyword = "TASK";
+
     private ArrayList<Items> taskItems;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
             newTask.taskItems = taskItems;
             newTask.id = taskid;
             Intent data = new Intent(MainActivity.this,ViewDetails.class);
-            data.putExtra("TASK",newTask);
+            data.putExtra(keyword,newTask);
             startActivity(data);
         }
     }

@@ -34,12 +34,12 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.ItemLi
     public void onBindViewHolder(@NonNull ItemListHolder holder, int position) {
         Task current = task.get(position);
         holder.mTvTitle.setText(current.taskTitle);
-        holder.mTvItems.setText((CharSequence) current.taskItems);
+        holder.mTvItems.setText(current.taskItems.get(0).itemName);
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return task.size();
     }
 
     class ItemListHolder extends RecyclerView.ViewHolder{

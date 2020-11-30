@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Notepad</string>
+    <string name="title">Title</string>
+    <string name="add_item">Add Item</string>
+    <string name="add_task">Add Task</string>
+    <string name="enter_item">Enter Item</string>
+    <string name="todo">TODO</string>
+    <string name="textview">TextView</string>
+</resources>

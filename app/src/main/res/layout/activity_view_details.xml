@@ -16,7 +16,8 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="25dp"
         android:src="@drawable/ic_add_task_24"
-        android:contentDescription="@string/todo"/>
+        android:contentDescription="@string/todo"
+        android:onClick="onAddNewTaskClicked"/>
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

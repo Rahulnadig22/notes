@@ -2,6 +2,7 @@ package com.example.notepad;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Matrix;
 import android.icu.util.EthiopicCalendar;
@@ -26,9 +27,12 @@ public class MainActivity extends AppCompatActivity {
     private Button mBtnAddTask;
     private LinearLayout mLlDynamicLayout;
     private int itemId = 0;
-    private int taskid = 0;
+
+    private DataBaseHelper dbhelper;
+    private boolean isUpdate = false;
 
     public static String keyword = "TASK";
+    public static String update = "isUpdate";
 
     private ArrayList<Items> taskItems;
     @Override
@@ -42,8 +46,36 @@ public class MainActivity extends AppCompatActivity {
         mLlDynamicLayout = findViewById(R.id.Ll_dynamic_layouts);
 
         mBtnAddTask.setEnabled(false);
-
+        dbhelper = new DataBaseHelper(MainActivity.this);
         taskItems = new ArrayList<>();
+
+        Bundle data = getIntent().getExtras();
+        if(data!=null){
+            isUpdate = data.getBoolean(update);
+            Task updatedTask = (Task) data.getSerializable(keyword);
+
+            if(isUpdate && updatedTask!=null){
+                ArrayList<Items> updatedItems = Items.convertJSONArrayStringToArrayList(updatedTask.taskItems);
+                mBtnAddTask.setEnabled(true);
+                mBtnAddTask.setText("SUBMIT CHANGES");
+                mEtTitle.setText(updatedTask.taskTitle);
+                for(int i=0;i < updatedItems.size();i++){
+                    View view = LayoutInflater.from(MainActivity.this).inflate(R.layout.cell_item_entry,null);
+                    final EditText mEtItem = view.findViewById(R.id.et_item);
+                    final ImageView mIvDone = view.findViewById(R.id.iv_item_done);
+
+
+                    mEtItem.setText(updatedItems.get(i).itemName);
+
+                    mIvDone.setVisibility(View.INVISIBLE);
+                    mLlDynamicLayout.addView(view);
+
+                    itemId = i+1;
+
+                    taskItems.add(updatedItems.get(i));
+                }
+            }
+        }
 
     }
 
@@ -94,14 +126,17 @@ public class MainActivity extends AppCompatActivity {
         if(mEtTitle.getText().toString().isEmpty()){
             return;
         }else {
-            taskid++;
             Task newTask = new Task();
             newTask.taskTitle = mEtTitle.getText().toString();
-            newTask.taskItems = taskItems;
-            newTask.id = taskid;
-            Intent data = new Intent(MainActivity.this,ViewDetails.class);
-            data.putExtra(keyword,newTask);
-            startActivity(data);
+            newTask.taskItems = Items.convertArrayListToJSONArraySrring(taskItems);
+
+            if (isUpdate) {
+                dbhelper.updateItemsInDatabase(dbhelper.getWritableDatabase(), newTask);
+            } else {
+                dbhelper.insertDataToDataBase(dbhelper.getWritableDatabase(), newTask);
+            }
+            setResult(Activity.RESULT_OK);
+            finish();
         }
     }
 }

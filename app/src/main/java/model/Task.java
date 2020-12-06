@@ -6,5 +6,5 @@ import java.util.ArrayList;
 public class Task  implements Serializable {
     public int id;
     public String taskTitle;
-    public ArrayList<Items> taskItems;
+    public String  taskItems;
 }

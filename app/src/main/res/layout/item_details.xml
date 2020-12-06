@@ -1,27 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <TextView
-        android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/textview"
-        android:textSize="20sp"
-        android:layout_marginStart="10dp"/>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/CdView"
+    android:layout_margin="5dp"
+    android:elevation="15dp"
+    app:cardCornerRadius="5dp">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <TextView
+            android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_items"
-            android:text="@string/textview"
-            android:textSize="14sp"
-            android:layout_marginStart="15dp"/>
+            android:text="@string/textview" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/ll_view_item_details"
+            android:orientation="vertical"/>
+
     </LinearLayout>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:src="@drawable/ic_delete_24"
+        android:id="@+id/delete_btn"
+        android:contentDescription="@string/todo" />
 
 
 
-</LinearLayout>
+</androidx.cardview.widget.CardView>

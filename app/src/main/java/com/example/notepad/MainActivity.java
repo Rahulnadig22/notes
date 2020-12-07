@@ -34,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
     public static String keyword = "TASK";
     public static String update = "isUpdate";
 
+    private Task updatedTask;
+
     private ArrayList<Items> taskItems;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         Bundle data = getIntent().getExtras();
         if(data!=null){
             isUpdate = data.getBoolean(update);
-            Task updatedTask = (Task) data.getSerializable(keyword);
+            updatedTask = (Task) data.getSerializable(keyword);
 
             if(isUpdate && updatedTask!=null){
                 ArrayList<Items> updatedItems = Items.convertJSONArrayStringToArrayList(updatedTask.taskItems);
@@ -131,6 +133,7 @@ public class MainActivity extends AppCompatActivity {
             newTask.taskItems = Items.convertArrayListToJSONArraySrring(taskItems);
 
             if (isUpdate) {
+                newTask.id = updatedTask.id;
                 dbhelper.updateItemsInDatabase(dbhelper.getWritableDatabase(), newTask);
             } else {
                 dbhelper.insertDataToDataBase(dbhelper.getWritableDatabase(), newTask);
